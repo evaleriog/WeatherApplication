@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weather Application Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- Mapbox CSS -->
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- Custom CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text|Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/weather_map.css">
+</head>
+<body>
+
+<div id="container">
+    <header>
+
+        <div class="jumbotron jumbotron-fluid mb-0">
+            <div class="container">
+                <h1 class="display-4 badge-pill badge-light text-center text-primary">Weather Map Application</h1>
+                <div class="lead">
+                    <span id="place"></span>
+                    <span id="current_temperature" class="badge-pill badge-light"></span>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <main class="p-2">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="forecastDaysSelector">Forecast</label>
+            </div>
+            <select class="custom-select" id="forecastDaysSelector">
+                <option selected value="3">3 Days</option>
+                <option value="4">4 Days</option>
+                <option value="5">5 Days</option>
+                <option value="6">6 Days</option>
+                <option value="7">7 Days</option>
+                <option value="8">8 Days</option>
+            </select>
+        </div>
+        <!--        displays the forecast information-->
+        <div class="card-columns card-deck m-auto">
+            <div class="loaders mb-3"></div>
+        </div>
+
+        <!--        displays map with search input box to look up places-->
+        <div id="map">
+            <!--            displays the search textbox and an button-->
+            <form id="search_panel" class="form-inline">
+                <div class="input-group input-group-sm mb-3 search_group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Place</span>
+                    </div>
+                    <input type="text" placeholder="Enter a place to find" aria-label="Username" aria-describedby="basic-addon1" id="place_search">
+                    <div class="input-group-append">
+                        <button type="submit" id="search" class="btn btn-primary btn-lg">Search</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="form-group slider">
+                <label for="formControlRange">Zoom Map</label>
+                <input type="range" class="form-control-range" id="formControlRange" min="0" max="22">
+            </div>
+
+        </div>
+    </main>
+
+</div>
+
+
+<!--MAPBOX-->
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+<script src="js/mapbox-geocoder-utils.js"></script>
+<script src="js/keys.js"></script>
+<!--BOOTSTRAP-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<!-- Custom JS -->
+<script src="js/jquery-2.2.4.js"></script>
+<script src="js/dark_sky.js"></script>
+<script src="js/weather_map.js"></script>
+<script>
+    var forecast = [];
+    var forecastSelector = 3;
+    var globalURL = sanAntonioURL;
+
+    $(document).ready(function () {
+        //empty html display to add cards
+        $('.card-columns').html("");
+        //call function to display the information to San Antonio on load
+        weatherCity(sanAntonioURL, forecast, forecastSelector);
+        changeCity(sanAntonioLongitude, sanAntonioLatitude);
+    });
+</script>
+
+</body>
+</html>
